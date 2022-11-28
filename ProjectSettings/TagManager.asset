@@ -1,0 +1,54 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - MobTag
+  - FadeTag
+  - PlayerSpawnTag
+  - SpellTag
+  - InteractUITag
+  - IntangibleTag
+  - GroundTag
+  - BulletTag
+  - BeamTag
+  - TargetingBeamTag
+  - BulletBeamMobTag
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - PlayerLayer
+  - FallThroughLayers
+  - MobLayer
+  - IgnoreJump
+  - SecureLayer
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
