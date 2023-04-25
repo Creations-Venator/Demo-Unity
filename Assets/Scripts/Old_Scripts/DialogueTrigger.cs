@@ -17,7 +17,8 @@ public class DialogueTrigger : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(isInRange && Input.GetKeyDown(KeyCode.I))
+		// old :  Input.GetKeyDown(KeyCode.I)
+        if(isInRange && Input.GetButtonDown("Interact"))
 		{
 			DialogueTri();
 		}

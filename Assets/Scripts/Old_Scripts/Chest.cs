@@ -18,7 +18,8 @@ public class Chest : MonoBehaviour
 
     void Update()
     {
-        if(isInRange && Input.GetKeyDown(KeyCode.I))
+		// old : Input.GetKeyDown(KeyCode.I)
+        if(isInRange && Input.GetButtonDown("Interact"))
 		{
 			OpenChest();
 		}

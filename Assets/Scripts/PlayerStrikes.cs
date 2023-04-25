@@ -93,8 +93,8 @@ public class PlayerStrikes : MonoBehaviour
 			transform.Translate(new Vector2(0f,0.8f), Space.World );
 		}
 		
-		// E pour Dash, à changer plus tard   .LeftShift  ?
-		if(Input.GetKeyUp(KeyCode.E) && !dashOnCooldown && !isWallBlock )
+		// E pour Dash, à changer plus tard   .LeftShift  ?  Input.GetKeyUp(KeyCode.E)
+		if(Input.GetButtonUp("Fire2") && !dashOnCooldown && !isWallBlock )
 		{			
 			if (PlayerMovement.instance.lookAtRight)
 			{
@@ -132,8 +132,8 @@ public class PlayerStrikes : MonoBehaviour
 			}
 		}
 		
-        // R pour attaquer : peut changer plus tard
-		if(Input.GetKeyUp(KeyCode.R) && beamChannelTicks < 200 && gunOnCooldown == false )
+        // R pour attaquer : peut changer plus tard  Input.GetKeyUp(KeyCode.R)
+		if(Input.GetButtonUp("Fire1") && beamChannelTicks < 200 && gunOnCooldown == false )
 		{	
 			if (beamChannelTicks < 50)
 			{
@@ -167,8 +167,8 @@ public class PlayerStrikes : MonoBehaviour
 			channelAnimator.SetTrigger("Ready");
 			AudioScript.instance.PlayClipAt(beamReadySound, transform.position);
 		}
-				
-		if ( beamChannelTicks > 199 && Input.GetKeyUp(KeyCode.R))
+				//Input.GetKeyUp(KeyCode.R)
+		if ( beamChannelTicks > 199 && Input.GetButtonUp("Fire1"))
 			{	
 				PlayerMovement.instance.rb.bodyType = RigidbodyType2D.Static;
 				//PlayerMovement.instance.rb.gravityScale = 0.2f ;

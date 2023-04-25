@@ -38,6 +38,12 @@ public class PlayerMovement : MonoBehaviour
 	
 	// utilisé dans PlayerHealth
 	public CapsuleCollider2D playerCollider;
+	
+	// nombre actuel de jump sans toucher le sol private
+	public int jumpNumber = 1;
+	// nombre max de jump sans toucher le sol
+	public int maxJump = 1;
+	private bool tryToGrounded = true;
 		
 	
 	public static PlayerMovement instance;
@@ -64,27 +70,44 @@ public class PlayerMovement : MonoBehaviour
 		{
 		//new à mettre dans fixedupdate ?
 		isGrounded = Physics2D.OverlapCircle(playerCirclePosition.position, groundCheckRadius, collisionLayers);		
-		//animator.SetBool("IsGround",isGrounded);		
-				
-		//if(isWallStuck)
-			//PlayerStrikes.instance.StopDashing();		
-			//Debug.Log("Stuck");
-			//rb.AddForce(new Vector2(0f,50));
+		//animator.SetBool("IsGround",isGrounded);
 		
 		
-		// bool qui permet de savoir si le joueur peut passer à travers le sol
-		//canFallThrough = Physics2D.OverlapCircle(playerCirclePosition.position, groundCheckRadius, fallThroughLayers);
+		if(isGrounded && tryToGrounded && jumpNumber != maxJump )
+		{		
+			tryToGrounded = false;
+			StartCoroutine(WaitToJump());
+		}
 		
-		// jump est reconnu par unity sur la touche espace
-		if(Input.GetButtonDown("Jump") && isGrounded && !isClimbing )
-		{
-			isJumping = true;			
+		if(Input.GetButtonDown("Jump") && !isGrounded && jumpNumber > 0 )
+		{			
+			isJumping = true;
+			jumpNumber -= 1;		
+			animator.SetTrigger("UseJump");
+		}		
+		
+		// jump est reconnu par unity sur la touche espace          // && !isClimbing  pour bloquer l'action quand il grimpe à une echelle 
+		else if(Input.GetButtonDown("Jump") && isGrounded )
+		{			
+			isJumping = true;
+			jumpNumber -= 1;	
 			animator.SetTrigger("UseJump");
 		}
+		// pourquoi il y a 2 fois le même morceau de code avec isGrounded et pas uniquement jumpNumber > 0 ? pour pouvoir toujours jump après avoir touché le sol => meuilleure fluidité
 		
 		
 			MovePlayer(horizontalMovement,verticalMovement);
 		}
+		
+		
+		
+				
+		//if(isWallStuck)
+			//PlayerStrikes.instance.StopDashing();
+			//rb.AddForce(new Vector2(0f,50));		
+		
+		// bool qui permet de savoir si le joueur peut passer à travers le sol
+		//canFallThrough = Physics2D.OverlapCircle(playerCirclePosition.position, groundCheckRadius, fallThroughLayers);
 				
 		
 	}
@@ -162,6 +185,19 @@ public class PlayerMovement : MonoBehaviour
 	{
 		Gizmos.color = Color.red;
 		Gizmos.DrawWireSphere(playerCirclePosition.position, groundCheckRadius);
+	}
+	
+	private IEnumerator WaitToJump()
+	{	
+		yield return new WaitForSeconds(0.1f);
+		if(isGrounded)
+		{			
+			// reset le nombre max de jump si le joueur touche le sol
+			jumpNumber = maxJump;
+			//Debug.Log("au sol");
+		}
+		
+		tryToGrounded = true;
 	}
 	
 }
